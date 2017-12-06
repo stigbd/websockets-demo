@@ -4,7 +4,17 @@
   "description": "Based on <https://medium.com/factory-mind/websocket-node-js-express-step-by-step-using-typescript-725114ad5fe4>",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf dist",
+    "copy-deps": "copy-newer --cwd node_modules ** ./dist/node_modules",
+    "start": "node dist/server/server.js",
+    "preserve": "npm run build",
+    "s": "npm run serve",
+    "serve": "concurrently \"npm run build.w\" \"nodemon --watch ./dist/server ./dist/server/server.js\"",
+    "lint": "tslint \"src/**/*.ts\"",
+    "prebuild": "npm install",
+    "b": "npm run build.w",
+    "build": "npm run copy-deps && tsc",
+    "build.w": "npm run copy-deps && tsc -w"
   },
   "author": "",
   "license": "ISC",
@@ -13,8 +23,17 @@
     "ws": "^3.3.2"
   },
   "devDependencies": {
+    "@angular/compiler": "^5.0.5",
+    "@angular/core": "^5.0.5",
     "@types/express": "^4.0.39",
     "@types/ws": "^3.2.1",
-    "typescript": "^2.6.2"
+    "codelyzer": "^4.0.1",
+    "concurrently": "^3.5.1",
+    "copy-newer": "^2.1.2",
+    "rimraf": "^2.6.2",
+    "rxjs": "^5.5.4",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2",
+    "zone.js": "^0.8.18"
   }
 }
